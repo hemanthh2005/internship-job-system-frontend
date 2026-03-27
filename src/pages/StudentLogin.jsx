@@ -1,35 +1,35 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FiMail, FiLock, FiLogIn } from 'react-icons/fi';
-import { useApp } from '../context/AppContext';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { FiMail, FiLock, FiLogIn } from "react-icons/fi";
+import { useApp } from "../context/AppContext";
 
 const StudentLogin = () => {
   const navigate = useNavigate();
   const { setUserRole, userRole } = useApp();
 
-  const [email, setEmail] = useState('student@gmail.com');
-  const [password, setPassword] = useState('123456');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("student@gmail.com");
+  const [password, setPassword] = useState("123456");
+  const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     const isValid =
-      email.trim().toLowerCase() === 'student@gmail.com' &&
-      password === '123456';
+      email.trim().toLowerCase() === "student@gmail.com" &&
+      password === "123456";
 
     if (!isValid) {
-      setError('Invalid student credentials.');
+      setError("Invalid student credentials.");
       return;
     }
 
-    setUserRole('student');
-    navigate('/student/dashboard');
+    setUserRole("student");
+    navigate("/student/dashboard");
   };
 
   useEffect(() => {
-    if (userRole === 'student') navigate('/student/dashboard');
+    if (userRole === "student") navigate("/student/dashboard");
   }, [userRole, navigate]);
 
   return (
@@ -39,9 +39,6 @@ const StudentLogin = () => {
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
             Student Login
           </h1>
-          <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-            Use the dummy credentials to continue.
-          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -80,7 +77,9 @@ const StudentLogin = () => {
           </div>
 
           {error && (
-            <div className="text-sm text-red-600 dark:text-red-400">{error}</div>
+            <div className="text-sm text-red-600 dark:text-red-400">
+              {error}
+            </div>
           )}
 
           <button
@@ -93,7 +92,7 @@ const StudentLogin = () => {
 
           <button
             type="button"
-            onClick={() => navigate('/admin/login')}
+            onClick={() => navigate("/admin/login")}
             className="w-full py-3 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
           >
             Admin Login
@@ -105,4 +104,3 @@ const StudentLogin = () => {
 };
 
 export default StudentLogin;
-

@@ -276,7 +276,7 @@ const UploadResume = () => {
                 Your skills have been updated. Check out your personalized job recommendations!
               </p>
               <button
-                onClick={() => window.location.href = '/dashboard'}
+                onClick={() => window.location.href = '/student/dashboard'}
                 className="w-full py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
               >
                 View Recommendations

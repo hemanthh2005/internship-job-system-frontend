@@ -19,8 +19,17 @@ export const AppProvider = ({ children }) => {
     return saved ? JSON.parse(saved) : false;
   });
 
-  // User role (student or admin)
-  const [userRole, setUserRole] = useState('student');
+  // User role (student or admin). Stored in localStorage for persistence.
+  const [userRoleState, setUserRoleState] = useState(() => {
+    const savedRole = localStorage.getItem('jobconnect_role');
+    return savedRole ? savedRole : null;
+  });
+
+  const setUserRole = (role) => {
+    setUserRoleState(role);
+    if (role) localStorage.setItem('jobconnect_role', role);
+    else localStorage.removeItem('jobconnect_role');
+  };
 
   // Student data
   const [student, setStudent] = useState(studentProfile);
@@ -84,7 +93,7 @@ export const AppProvider = ({ children }) => {
 
   // Update application status (admin)
   const updateApplicationStatus = (appId, newStatus) => {
-    if (userRole !== 'admin') {
+    if (userRoleState !== 'admin') {
       addNotification('Only admin can update application status.', 'warning');
       return false;
     }
@@ -177,7 +186,7 @@ export const AppProvider = ({ children }) => {
   const value = {
     darkMode,
     toggleDarkMode,
-    userRole,
+    userRole: userRoleState,
     setUserRole,
     student,
     setStudent,

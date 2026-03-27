@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
-import { FiTrendingUp, FiBriefcase, FiCheckCircle, FiClock } from 'react-icons/fi';
+import { FiTrendingUp, FiBriefcase, FiCheckCircle, FiClock, FiPlusCircle } from 'react-icons/fi';
 import { useApp } from '../context/AppContext';
 import JobCard from '../components/JobCard';
 import LoadingSpinner from '../components/LoadingSpinner';
+import SkillTag from '../components/SkillTag';
 
 const Dashboard = () => {
-  const { student, getRecommendedJobs, applyToJob, applications } = useApp();
+  const { student, getRecommendedJobs, applyToJob, applications, jobs, updateStudentSkills } = useApp();
   const [loading, setLoading] = useState(true);
   const [recommendedJobs, setRecommendedJobs] = useState([]);
+  const [skillInput, setSkillInput] = useState('');
 
   useEffect(() => {
     // Simulate loading
@@ -16,6 +18,31 @@ const Dashboard = () => {
       setLoading(false);
     }, 1000);
   }, []);
+
+  // Refresh recommendations when skills change.
+  useEffect(() => {
+    setRecommendedJobs(getRecommendedJobs());
+  }, [student.skills, jobs]);
+
+  const handleAddSkill = () => {
+    const trimmed = skillInput.trim();
+    if (!trimmed) return;
+
+    const alreadyExists = student.skills.some(
+      (s) => s.toLowerCase() === trimmed.toLowerCase()
+    );
+    if (alreadyExists) {
+      setSkillInput('');
+      return;
+    }
+
+    updateStudentSkills([...student.skills, trimmed]);
+    setSkillInput('');
+  };
+
+  const handleRemoveSkill = (skill) => {
+    updateStudentSkills(student.skills.filter((s) => s !== skill));
+  };
 
   const stats = [
     {
@@ -94,6 +121,58 @@ const Dashboard = () => {
         ))}
       </div>
 
+      {/* My Skills */}
+      <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 space-y-4">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white">My Skills</h2>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+              Add skills to improve matching and recommendations.
+            </p>
+          </div>
+        </div>
+
+        <div className="flex flex-col sm:flex-row gap-3">
+          <input
+            value={skillInput}
+            onChange={(e) => setSkillInput(e.target.value)}
+            type="text"
+            placeholder="e.g., React, SQL, Machine Learning"
+            className="flex-1 px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+          />
+          <button
+            onClick={handleAddSkill}
+            type="button"
+            className={`px-6 py-2.5 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 ${
+              skillInput.trim().length === 0
+                ? 'bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed'
+                : 'bg-blue-600 hover:bg-blue-700 text-white'
+            }`}
+            disabled={skillInput.trim().length === 0}
+          >
+            <FiPlusCircle className="w-5 h-5" />
+            Add
+          </button>
+        </div>
+
+        {student.skills.length > 0 ? (
+          <div className="flex flex-wrap gap-2">
+            {student.skills.map((skill) => (
+              <SkillTag
+                key={skill}
+                skill={skill}
+                variant="gray"
+                onRemove={handleRemoveSkill}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="text-sm text-gray-600 dark:text-gray-400">
+            No skills added yet.
+          </div>
+        )}
+      </div>
+
       {/* Resume Upload Alert */}
       {!student.resumeUploaded && (
         <div className="bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-500 p-4 rounded-lg animate-slide-up">
@@ -107,7 +186,7 @@ const Dashboard = () => {
                 Upload your resume to get better job recommendations and improve your match score.
               </p>
               <button
-                onClick={() => window.location.href = '/upload-resume'}
+                onClick={() => window.location.href = '/student/upload-resume'}
                 className="text-sm font-medium text-yellow-800 dark:text-yellow-300 hover:underline"
               >
                 Upload Resume →

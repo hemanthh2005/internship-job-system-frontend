@@ -11,6 +11,8 @@ import Jobs from './pages/Jobs';
 import Applications from './pages/Applications';
 import UploadResume from './pages/UploadResume';
 import ApplyJobLink from './pages/ApplyJobLink';
+import StudentLogin from './pages/StudentLogin';
+import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminJobs from './pages/AdminJobs';
 import AddJob from './pages/AddJob';
@@ -37,11 +39,21 @@ const ProtectedRoute = ({ children, allowedRole }) => {
   const { userRole } = useApp();
 
   if (!userRole) {
-    return <Navigate to="/" replace />;
+    return (
+      <Navigate
+        to={allowedRole === 'admin' ? '/admin/login' : '/student/login'}
+        replace
+      />
+    );
   }
 
   if (allowedRole && userRole !== allowedRole) {
-    return <Navigate to={userRole === 'admin' ? '/admin' : '/dashboard'} replace />;
+    return (
+      <Navigate
+        to={userRole === 'admin' ? '/admin/dashboard' : '/student/dashboard'}
+        replace
+      />
+    );
   }
 
   return children;
@@ -56,9 +68,13 @@ function AppRoutes() {
         {/* Landing Page */}
         <Route path="/" element={<LandingPage />} />
 
+        {/* Login Pages */}
+        <Route path="/student/login" element={<StudentLogin />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+
         {/* Student Routes */}
         <Route
-          path="/dashboard"
+          path="/student/dashboard"
           element={
             <ProtectedRoute allowedRole="student">
               <Layout role="student">
@@ -68,7 +84,7 @@ function AppRoutes() {
           }
         />
         <Route
-          path="/jobs"
+          path="/student/jobs"
           element={
             <ProtectedRoute allowedRole="student">
               <Layout role="student">
@@ -78,7 +94,7 @@ function AppRoutes() {
           }
         />
         <Route
-          path="/applications"
+          path="/student/applications"
           element={
             <ProtectedRoute allowedRole="student">
               <Layout role="student">
@@ -98,7 +114,7 @@ function AppRoutes() {
           }
         />
         <Route
-          path="/upload-resume"
+          path="/student/upload-resume"
           element={
             <ProtectedRoute allowedRole="student">
               <Layout role="student">
@@ -110,7 +126,7 @@ function AppRoutes() {
 
         {/* Admin Routes */}
         <Route
-          path="/admin"
+          path="/admin/dashboard"
           element={
             <ProtectedRoute allowedRole="admin">
               <Layout role="admin">
@@ -151,7 +167,15 @@ function AppRoutes() {
         />
 
         {/* Fallback */}
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route
+          path="*"
+          element={
+            <Navigate
+              to={userRole === 'admin' ? '/admin/dashboard' : '/student/dashboard'}
+              replace
+            />
+          }
+        />
       </Routes>
     </Router>
   );

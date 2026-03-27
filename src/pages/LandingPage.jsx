@@ -7,18 +7,15 @@ import {
   FiUsers,
   FiZap,
 } from "react-icons/fi";
-import { useApp } from "../context/AppContext";
 
 const LandingPage = () => {
   const navigate = useNavigate();
-  const { setUserRole } = useApp();
 
   const handleLogin = (role) => {
-    setUserRole(role);
     if (role === "student") {
-      navigate("/dashboard");
+      navigate("/student/login");
     } else {
-      navigate("/admin");
+      navigate("/admin/login");
     }
   };
 

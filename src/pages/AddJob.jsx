@@ -21,6 +21,7 @@ const AddJob = () => {
     stipend: '',
     description: '',
     deadline: '',
+    applicationLink: '',
     requirements: ['']
   });
 
@@ -75,8 +76,7 @@ const AddJob = () => {
     };
 
     const createdJob = addJob(jobData);
-    const studentApplyLink = `${window.location.origin}/apply/${createdJob?.id}`;
-    setPostedStudentLink(studentApplyLink);
+    setPostedStudentLink(createdJob?.applicationLink ?? '');
     setPostedJobId(createdJob?.id ?? null);
   };
 
@@ -214,6 +214,19 @@ const AddJob = () => {
                 className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
               />
             </div>
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Application Link
+              </label>
+              <input
+                type="url"
+                name="applicationLink"
+                value={formData.applicationLink}
+                onChange={handleChange}
+                placeholder="https://example.com/apply"
+                className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+              />
+            </div>
           </div>
         </div>
 
@@ -223,10 +236,10 @@ const AddJob = () => {
               <FiLink2 className="w-6 h-6 text-green-600 dark:text-green-400" />
               <div>
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-                  Student Apply Link
+                  Application Link
                 </h2>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                  Share this link with students so they can apply to this job.
+                  This link will be used by students on the job card.
                 </p>
               </div>
             </div>
@@ -241,7 +254,12 @@ const AddJob = () => {
               <button
                 type="button"
                 onClick={handleCopyLink}
-                className="px-6 py-2.5 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+                disabled={!postedStudentLink}
+                className={`px-6 py-2.5 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 ${
+                  !postedStudentLink
+                    ? 'bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed'
+                    : 'bg-blue-600 hover:bg-blue-700 text-white'
+                }`}
               >
                 <FiCopy className="w-5 h-5" />
                 Copy

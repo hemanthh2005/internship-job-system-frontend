@@ -167,7 +167,7 @@ const Applications = () => {
           </p>
           {filter === 'all' && (
             <button
-              onClick={() => window.location.href = '/jobs'}
+              onClick={() => window.location.href = '/student/jobs'}
               className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
               Browse Jobs

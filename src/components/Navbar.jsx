@@ -8,13 +8,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     setUserRole(null);
-    navigate('/');
-  };
-
-  const switchRole = () => {
-    const newRole = userRole === 'student' ? 'admin' : 'student';
-    setUserRole(newRole);
-    navigate(newRole === 'student' ? '/dashboard' : '/admin');
+    navigate('/student/login');
   };
 
   return (
@@ -22,7 +16,16 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to={userRole === 'admin' ? '/admin' : '/dashboard'} className="flex items-center gap-2 group">
+          <Link
+            to={
+              userRole === 'admin'
+                ? '/admin/dashboard'
+                : userRole === 'student'
+                  ? '/student/dashboard'
+                  : '/student/login'
+            }
+            className="flex items-center gap-2 group"
+          >
             <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-2 rounded-lg group-hover:scale-110 transition-transform">
               <FiBriefcase className="w-6 h-6 text-white" />
             </div>
@@ -47,14 +50,6 @@ const Navbar = () => {
                 </span>
               </div>
             )}
-
-            {/* Role switcher (for demo purposes) */}
-            <button
-              onClick={switchRole}
-              className="px-3 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
-            >
-              Switch to {userRole === 'student' ? 'Admin' : 'Student'}
-            </button>
 
             {/* Dark mode toggle */}
             <button

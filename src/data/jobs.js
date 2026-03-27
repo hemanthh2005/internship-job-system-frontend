@@ -16,7 +16,8 @@ export const jobsData = [
       "Good problem-solving skills"
     ],
     postedDate: "2024-03-20",
-    deadline: "2024-04-15"
+    deadline: "2024-04-15",
+    applicationLink: "https://example.com/apply/1"
   },
   {
     id: 2,
@@ -35,7 +36,8 @@ export const jobsData = [
       "Strong analytical skills"
     ],
     postedDate: "2024-03-18",
-    deadline: "2024-04-10"
+    deadline: "2024-04-10",
+    applicationLink: "https://example.com/apply/2"
   },
   {
     id: 3,
@@ -54,7 +56,8 @@ export const jobsData = [
       "Excellent communication skills"
     ],
     postedDate: "2024-03-15",
-    deadline: "2024-04-20"
+    deadline: "2024-04-20",
+    applicationLink: "https://example.com/apply/3"
   },
   {
     id: 4,
@@ -73,7 +76,8 @@ export const jobsData = [
       "Eager to learn cloud technologies"
     ],
     postedDate: "2024-03-22",
-    deadline: "2024-04-18"
+    deadline: "2024-04-18",
+    applicationLink: "https://example.com/apply/4"
   },
   {
     id: 5,
@@ -92,7 +96,8 @@ export const jobsData = [
       "Strong debugging skills"
     ],
     postedDate: "2024-03-10",
-    deadline: "2024-04-05"
+    deadline: "2024-04-05",
+    applicationLink: "https://example.com/apply/5"
   },
   {
     id: 6,
@@ -111,7 +116,8 @@ export const jobsData = [
       "Creativity and attention to detail"
     ],
     postedDate: "2024-03-19",
-    deadline: "2024-04-12"
+    deadline: "2024-04-12",
+    applicationLink: "https://example.com/apply/6"
   },
   {
     id: 7,
@@ -130,7 +136,8 @@ export const jobsData = [
       "Strong scripting skills"
     ],
     postedDate: "2024-03-16",
-    deadline: "2024-04-08"
+    deadline: "2024-04-08",
+    applicationLink: "https://example.com/apply/7"
   },
   {
     id: 8,
@@ -149,7 +156,8 @@ export const jobsData = [
       "Problem-solving mindset"
     ],
     postedDate: "2024-03-21",
-    deadline: "2024-04-16"
+    deadline: "2024-04-16",
+    applicationLink: "https://example.com/apply/8"
   },
   {
     id: 9,
@@ -168,7 +176,8 @@ export const jobsData = [
       "Master's or PhD in related field"
     ],
     postedDate: "2024-03-12",
-    deadline: "2024-04-10"
+    deadline: "2024-04-10",
+    applicationLink: "https://example.com/apply/9"
   },
   {
     id: 10,
@@ -187,6 +196,7 @@ export const jobsData = [
       "Good communication skills"
     ],
     postedDate: "2024-03-17",
-    deadline: "2024-04-14"
+    deadline: "2024-04-14",
+    applicationLink: "https://example.com/apply/10"
   }
 ];

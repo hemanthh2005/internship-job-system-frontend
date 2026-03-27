@@ -11,14 +11,14 @@ import {
 
 const Sidebar = ({ role = 'student' }) => {
   const studentLinks = [
-    { to: '/dashboard', icon: FiHome, label: 'Dashboard' },
-    { to: '/jobs', icon: FiBriefcase, label: 'Browse Jobs' },
-    { to: '/applications', icon: FiFileText, label: 'My Applications' },
-    { to: '/upload-resume', icon: FiUpload, label: 'Upload Resume' },
+    { to: '/student/dashboard', icon: FiHome, label: 'Dashboard' },
+    { to: '/student/jobs', icon: FiBriefcase, label: 'Browse Jobs' },
+    { to: '/student/applications', icon: FiFileText, label: 'My Applications' },
+    { to: '/student/upload-resume', icon: FiUpload, label: 'Upload Resume' },
   ];
 
   const adminLinks = [
-    { to: '/admin', icon: FiHome, label: 'Dashboard' },
+    { to: '/admin/dashboard', icon: FiHome, label: 'Dashboard' },
     { to: '/admin/jobs', icon: FiBriefcase, label: 'Manage Jobs' },
     { to: '/admin/add-job', icon: FiPlusCircle, label: 'Add New Job' },
     { to: '/admin/applications', icon: FiUsers, label: 'View Applications' },

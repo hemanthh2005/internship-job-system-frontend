@@ -20,7 +20,7 @@ const ApplyJobLink = () => {
     // Extra safety: only students should be applying.
     if (userRole !== 'student') return;
     const ok = applyToJob(jobIdNum);
-    if (ok) navigate('/applications');
+    if (ok) navigate('/student/applications');
   };
 
   if (!job) {
@@ -36,7 +36,7 @@ const ApplyJobLink = () => {
           This application link may be invalid.
         </div>
         <button
-          onClick={() => navigate('/jobs')}
+          onClick={() => navigate('/student/jobs')}
           className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
         >
           Browse Jobs

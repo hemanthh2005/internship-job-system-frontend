@@ -11,6 +11,8 @@ const JobCard = ({ job, showMatch = true, onApply }) => {
   const matchPercentage = showMatch ? calculateMatchPercentage(job.skills) : null;
   const skillGap = showMatch ? getSkillGap(job.skills) : [];
   const isApplied = applications.some(app => app.jobId === job.id);
+  const applicationLink = job.applicationLink;
+  const linkAvailable = Boolean(applicationLink && String(applicationLink).trim().length > 0);
 
   const matchingSkills = job.skills.filter(skill =>
     student.skills.map(s => s.toLowerCase()).includes(skill.toLowerCase())
@@ -129,15 +131,19 @@ const JobCard = ({ job, showMatch = true, onApply }) => {
         {/* Action Button */}
         {onApply && (
           <button
-            onClick={() => onApply(job.id)}
-            disabled={isApplied}
+            onClick={() => {
+              if (!linkAvailable) return;
+              window.open(applicationLink, '_blank', 'noopener,noreferrer');
+              onApply(job.id);
+            }}
+            disabled={!linkAvailable || isApplied}
             className={`w-full py-3 rounded-lg font-semibold transition-all ${
-              isApplied
+              !linkAvailable || isApplied
                 ? 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed'
                 : 'bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white shadow-lg hover:shadow-xl transform hover:scale-[1.02]'
             }`}
           >
-            {isApplied ? 'Already Applied' : 'Apply Now'}
+            {isApplied ? 'Already Applied' : linkAvailable ? 'Apply Now' : 'Not available'}
           </button>
         )}
       </div>
